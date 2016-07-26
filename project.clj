@@ -1,4 +1,4 @@
-(defproject paraman "0.1.0"
+(defproject paraman "0.1.1"
   :description "Encode clojure maps into query-string or form params"
   :url "https://github.com/nanit/paraman"
   :license {:name "Eclipse Public License"

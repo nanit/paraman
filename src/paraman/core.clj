@@ -12,8 +12,14 @@
 (defn- bracketize [s inner-map?]
   (if (and inner-map? (not-empty s)) (str "[" s "]") s))
 
+(defn- value->str [s]
+  (encode (if (keyword? s) (name s) (str s))))
+
 (defn- kv->str [obj]
-  (str (encode (:prefix obj)) (encode (bracketize (keyword->str (:key obj)) (:inner-map obj))) "=" (encode (:value obj))))
+  (str (encode (:prefix obj)) 
+       (encode (bracketize (keyword->str (:key obj)) (:inner-map obj)))
+       "=" 
+       (value->str (:value obj))))
 
 (defn- convert-vector [acc v prefix]
   (reduce 
@@ -32,9 +38,9 @@
   ([acc k v] (to-kv acc k v false nil))
   ([acc k v inner-map? current-prefix]
    (cond 
-     (string? v) (conj acc {:key k :value v :inner-map inner-map? :prefix current-prefix})
      (vector? v) (convert-vector acc v (str current-prefix (keyword->str k) "[]"))
-     (map?    v) (convert-map acc v (str current-prefix (bracketize (keyword->str k) inner-map?))))))
+     (map?    v) (convert-map acc v (str current-prefix (bracketize (keyword->str k) inner-map?)))
+     :else       (conj acc {:key k :value v :inner-map inner-map? :prefix current-prefix}))))
 
 (defn convert [m]
   (join "&" 
