@@ -38,9 +38,10 @@
   ([acc k v] (to-kv acc k v false nil))
   ([acc k v inner-map? current-prefix]
    (cond 
-     (vector? v) (convert-vector acc v (str current-prefix (keyword->str k) "[]"))
-     (map?    v) (convert-map acc v (str current-prefix (bracketize (keyword->str k) inner-map?)))
-     :else       (conj acc {:key k :value v :inner-map inner-map? :prefix current-prefix}))))
+     (or (vector? v)
+         (sequential? v)) (convert-vector acc v (str current-prefix (keyword->str k) "[]"))
+     (map?        v)      (convert-map acc v (str current-prefix (bracketize (keyword->str k) inner-map?)))
+     :else                (conj acc {:key k :value v :inner-map inner-map? :prefix current-prefix}))))
 
 (defn convert [m]
   (join "&" 

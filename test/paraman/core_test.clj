@@ -26,6 +26,9 @@
 (deftest basic-array-test
   (is (= "key1[]=val1&key1[]=val2" (decode (convert {:key1 ["val1" "val2"]})))))
 
+(deftest basic-seqable-test
+  (is (= "key1[]=val1&key1[]=val2" (decode (convert {:key1 (map identity ["val1" "val2"])})))))
+
 (deftest array-with-keywords-test
   (is (= "key1[]=val1&key1[]=val2" (decode (convert {:key1 [:val1 :val2]})))))
 
