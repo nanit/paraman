@@ -17,7 +17,7 @@ Instead of:
 
 ```clojure
 (require '[org.httpkit.client :as http])
-(def my-post-data {:some [{:obj "key1"} {:obj "key2"}] })
+(def my-post-data {:some [{:obj "key1"} {:obj "key2"}]})
 @(http/post "http://some.url.com/resource" {:form-params my-post-data})
 ; =>  java.lang.ClassCastException: clojure.lang.PersistentArrayMap cannot be cast to clojure.lang.Named
 ```
@@ -27,7 +27,7 @@ Do:
 ```clojure
 (require '[org.httpkit.client :as http])
 (require '[paraman.core :refer [convert]])
-(def my-post-data {:some [{:obj "key1"} {:obj "key2"}] })
+(def my-post-data {:some [{:obj "key1"} {:obj "key2"}]})
 @(http/post "http://some.url.com/resource" {:body (convert my-post-data)})
 ```
 
