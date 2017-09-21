@@ -1,5 +1,7 @@
 # paraman
 
+[![Clojars Project](https://clojars.org/paraman/latest-version.svg)](http://clojars.org/paraman)
+
 Paraman is a Clojure library for converting Clojure maps into valid HTTP query
 params. It supports arrays and nested objects.
 
